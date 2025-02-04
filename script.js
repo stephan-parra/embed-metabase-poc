@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const reportFrame = document.getElementById('report-frame');
+    const reportContainer = document.getElementById('report-container');
     const navLinks = document.querySelectorAll('nav a');
 
     // Object to store Metabase report URLs
     const reportUrls = {
-        report1: '',
-        report2: '',
+        report1: 'https://reporting.pcges.us/public/question/a49ef778-c317-4a67-9c86-6b7377cbb739',
+        report2: '', // Add URLs for other reports as needed
         report3: '',
         report4: ''
     };
@@ -15,11 +15,26 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const reportId = e.target.getAttribute('data-report');
             if (reportUrls[reportId]) {
-                reportFrame.src = reportUrls[reportId];
+                loadReport(reportUrls[reportId]);
             } else {
-                reportFrame.src = '';
-                reportFrame.srcdoc = '<h2>Report not available</h2>';
+                reportContainer.innerHTML = '<h2>Report not available</h2>';
             }
         });
     });
+
+    function loadReport(url) {
+        // Clear previous content
+        reportContainer.innerHTML = '';
+
+        // Create iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.frameBorder = "0";
+        iframe.width = "800";
+        iframe.height = "600";
+        iframe.allowTransparency = true;
+
+        // Append iframe to container
+        reportContainer.appendChild(iframe);
+    }
 });

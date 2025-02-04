@@ -1,13 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('login-form');
+    const loginContainer = document.getElementById('login-container');
+    const dashboardContainer = document.getElementById('dashboard-container');
     const reportContainer = document.getElementById('report-container');
     const navLinks = document.querySelectorAll('nav a');
+
+    // Hardcoded credentials
+    const validCredentials = {
+        username: 'admin',
+        password: 'password123'
+    };
+
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === validCredentials.username && password === validCredentials.password) {
+            loginContainer.style.display = 'none';
+            dashboardContainer.style.display = 'flex';
+        } else {
+            alert('Invalid credentials. Please try again.');
+        }
+    });
 
     // Object to store Metabase report URLs
     const reportUrls = {
         report1: 'https://reporting.pcges.us/public/question/a49ef778-c317-4a67-9c86-6b7377cbb739',
-        report2: 'http://metabase-hpr.safedigs.co.uk/public/dashboard/39496407-bb09-4df3-afa0-ab5d7fce2295', // Add URLs for other reports as needed
+        report2: 'https://metabase-hpr.safedigs.co.uk/public/dashboard/39496407-bb09-4df3-afa0-ab5d7fce2295',
         report3: 'https://reporting.pcges.us/public/dashboard/105d61ce-45f7-42ab-a3d4-ef018088c0bb',
-        report4: 'http://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720'
+        report4: 'https://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720'
     };
 
     navLinks.forEach(link => {

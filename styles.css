@@ -1,8 +1,7 @@
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2c3e50;
-    --background-color: #ecf0f1;
-    --text-color: #34495e;
+    --primary-color: #007bff;
+    --text-color: #333;
+    --background-color: #f4f4f4;
 }
 
 * {
@@ -18,79 +17,11 @@ body {
     background-color: var(--background-color);
 }
 
-header {
-    background-color: var(--primary-color);
-    color: white;
-    text-align: center;
-    padding: 1rem;
-}
-
-main {
-    display: flex;
-    min-height: calc(100vh - 120px);
-}
-
-nav {
-    width: 200px;
-    background-color: var(--secondary-color);
-    padding: 1rem;
-}
-
-nav ul {
-    list-style-type: none;
-}
-
-nav ul li {
-    margin-bottom: 1rem;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: var(--primary-color);
-}
-
-#report-container {
-    flex-grow: 1;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 100px); /* Adjust this value based on your header and footer height */
-}
-
-#report-container iframe {
-    flex-grow: 1;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-footer {
-    background-color: var(--secondary-color);
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Add these styles to your existing CSS */
-
 #login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: var(--background-color);
 }
 
 #login-form {
@@ -103,28 +34,92 @@ footer {
 
 #login-form h2 {
     margin-bottom: 1rem;
-    color: var(--primary-color);
 }
 
 #login-form input {
     display: block;
     width: 100%;
-    padding: 0.5rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
     border-radius: 4px;
 }
 
 #login-form button {
+    width: 100%;
+    padding: 0.5rem;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 #login-form button:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
+}
+
+#dashboard-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+}
+
+nav {
+    width: 200px;
+    background-color: #fff;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    margin-bottom: 1rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+nav ul li a:hover {
+    color: var(--primary-color);
+}
+
+#report-container {
+    flex-grow: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#report-container iframe {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
 }

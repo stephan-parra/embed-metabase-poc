@@ -10,25 +10,34 @@
 </head>
 
 <body>
-    <header>
-        <h1>Metabase Reports Dashboard</h1>
-    </header>
-    <main>
-        <nav>
-            <ul>
-                <li><a href="#" data-report="report1">Report 1</a></li>
-                <li><a href="#" data-report="report2">Report 2</a></li>
-                <li><a href="#" data-report="report3">Report 3</a></li>
-                <li><a href="#" data-report="report4">Report 4</a></li>
-            </ul>
-        </nav>
-        <div id="report-container">
-            <!-- The report will be loaded here -->
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
-    </footer>
+    <div id="login-container">
+        <form id="login-form">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <div id="dashboard-container" style="display: none;">
+        <header>
+            <h1>Metabase Reports Dashboard</h1>
+        </header>
+        <main>
+            <nav>
+                <ul>
+                    <li><a href="#" data-report="report1">Report 1</a></li>
+                    <li><a href="#" data-report="report2">Report 2</a></li>
+                    <li><a href="#" data-report="report3">Report 3</a></li>
+                    <li><a href="#" data-report="report4">Report 4</a></li>
+                </ul>
+            </nav>
+            <div id="report-container">
+                <!-- The report will be loaded here -->
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
-
 </html>

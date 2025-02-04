@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.frameBorder = "0";
-        iframe.width = "800";
-        iframe.height = "600";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
         iframe.allowTransparency = true;
 
         // Append iframe to container

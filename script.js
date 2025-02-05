@@ -30,8 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
         report1: 'https://reporting.pcges.uk/public/dashboard/035bc09d-9ff9-489d-8085-15e89abf4912',
         report2: 'https://metabase-hpr.safedigs.co.uk/public/dashboard/39496407-bb09-4df3-afa0-ab5d7fce2295',
         report3: 'https://reporting.pcges.us/public/dashboard/105d61ce-45f7-42ab-a3d4-ef018088c0bb',
-        report4: 'https://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720'
+        report4: 'https://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720',
+        report5: 'https://reporting.pcges.us/public/dashboard/f79133e1-44d9-4fbc-8a1b-731b17ba79a0'
     };
+
 
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {

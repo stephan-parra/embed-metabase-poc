@@ -40,12 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const reportId = e.target.getAttribute('data-report');
             if (reportUrls[reportId]) {
+                // Remove 'clicked' class from all links
+                navLinks.forEach(l => l.classList.remove('clicked'));
+                // Add 'clicked' class to the clicked link
+                e.target.classList.add('clicked');
                 loadReport(reportUrls[reportId]);
+                // Remove the 'clicked' class after the animation duration
+                setTimeout(() => {
+                    e.target.classList.remove('clicked');
+                }, 500);
             } else {
                 reportContainer.innerHTML = '<h2>Report not available</h2>';
             }
         });
     });
+
 
     function loadReport(url) {
         // Clear previous content

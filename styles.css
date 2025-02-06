@@ -79,41 +79,14 @@ header h1 {
     font-weight: 300;
 }
 
-main {
+.dashboard-main {
     display: flex;
     flex-grow: 1;
+    overflow: hidden; /* Prevents scrolling on the main container */
 }
 
 nav {
-    width: 250px;
-    background-color: var(--secondary-color);
-    padding: 1rem;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    margin-bottom: 0.5rem;
-}
-
-nav ul li a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-nav ul li a i {
-    margin-right: 0.5rem;
+    flex-shrink: 0; /* Prevents the nav from shrinking */
 }
 
 #report-container {
@@ -121,7 +94,10 @@ nav ul li a i {
     padding: 1rem;
     background-color: white;
     box-shadow: 0 0 10px var(--shadow-color);
+    overflow: auto; /* Allows scrolling within the report container if needed */
+    height: 100%; /* Takes full height of its parent */
 }
+
 
 footer {
     background-color: var(--secondary-color);

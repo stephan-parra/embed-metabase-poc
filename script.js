@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         report1: 'https://reporting.pcges.uk/public/dashboard/035bc09d-9ff9-489d-8085-15e89abf4912',
         report2: 'https://metabase-hpr.safedigs.co.uk/public/dashboard/39496407-bb09-4df3-afa0-ab5d7fce2295',
         report3: 'https://reporting.pcges.us/public/dashboard/105d61ce-45f7-42ab-a3d4-ef018088c0bb',
-        report4: 'http://metabase-hpr.safedigs.co.uk/public/dashboard/ea2a2320-8536-4888-9451-eecbea62dd51',
+        report4: 'https://metabase-hpr.safedigs.co.uk/public/dashboard/ea2a2320-8536-4888-9451-eecbea62dd51',
         report5: 'https://reporting.pcges.us/public/dashboard/f79133e1-44d9-4fbc-8a1b-731b17ba79a0'
     };
 

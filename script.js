@@ -57,37 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function loadReport(url) {
-            // Clear previous content
-            reportContainer.innerHTML = '';
+        // Clear previous content
+        reportContainer.innerHTML = '';
 
-            // Create iframe
-            const iframe = document.createElement('iframe');
-            iframe.src = url;
-            iframe.frameBorder = "0";
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.allowTransparency = true;
+        // Create iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.frameBorder = "0";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.allowTransparency = true;
 
-            // Append iframe to container
-            reportContainer.appendChild(iframe);
-
-            // After setting the iframe src, add:
-            setTimeout(adjustReportHeight, 100); // Slight delay to ensure the iframe has loaded
-        }
-
-    function adjustReportHeight() {
-        const reportContainer = document.getElementById('report-container');
-        const iframe = reportContainer.querySelector('iframe');
-
-        if (iframe) {
-            const containerHeight = reportContainer.clientHeight;
-            iframe.style.height = `${containerHeight}px`;
-        }
+        // Append iframe to container
+        reportContainer.appendChild(iframe);
     }
-
-    // Adjust height on window resize
-    window.addEventListener('resize', adjustReportHeight);
-
-    // Initial adjustment after page load
-    document.addEventListener('DOMContentLoaded', adjustReportHeight);
 });

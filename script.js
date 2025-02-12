@@ -26,16 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Object to store Metabase report URLs
-    // Object to store Metabase report URLs
     const reportUrls = {
         report1: 'https://reporting.pcges.uk/public/dashboard/035bc09d-9ff9-489d-8085-15e89abf4912',
         report2: 'https://metabase-hpr.safedigs.co.uk/public/dashboard/39496407-bb09-4df3-afa0-ab5d7fce2295',
         report3: 'https://reporting.pcges.us/public/dashboard/105d61ce-45f7-42ab-a3d4-ef018088c0bb',
         report4: 'https://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720',
-        report5: 'https://reporting.pcges.us/public/dashboard/f79133e1-44d9-4fbc-8a1b-731b17ba79a0',
-        report6: 'https://lsbud-kibana.kb.eu-west-2.aws.cloud.es.io:9243/app/dashboards#/view/d2058137-4845-47db-ac6b-0e500cc7dbcd?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-30d%2Fd%2Cto%3Anow))&hide-filter-bar=true'
+        report5: 'https://reporting.pcges.us/public/dashboard/f79133e1-44d9-4fbc-8a1b-731b17ba79a0'
     };
-
 
 
     navLinks.forEach(link => {

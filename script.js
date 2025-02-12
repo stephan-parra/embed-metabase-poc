@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         report3: 'https://reporting.pcges.us/public/dashboard/105d61ce-45f7-42ab-a3d4-ef018088c0bb',
         report4: 'https://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720',
         report5: 'https://reporting.pcges.us/public/dashboard/f79133e1-44d9-4fbc-8a1b-731b17ba79a0',
-        report6: 'https://lsbud-kibana.kb.eu-west-2.aws.cloud.es.io:9243/app/dashboards#/view/d2058137-4845-47db-ac6b-0e500cc7dbcd?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A0)%2Ctime%3A(from%3Anow-30d%2Fd%2Cto%3Anow))&hide-filter-bar=true'
+        report6: 'https://lsbud-kibana.kb.eu-west-2.aws.cloud.es.io:9243/s/test-space/app/dashboards#/view/be22d123-754a-4703-9c3d-621e26b4ad84?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-7d%2Fd%2Cto%3Anow))&hide-filter-bar=true'
     };
 
 

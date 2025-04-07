@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (reportUrls[reportId]) {
                 if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
                     // Fetch the signed embed URL from your Lambda API
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com?memberid=138')
+                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/embed-question?memberid=138')
                         .then(response => response.json())
                         .then(data => {
                             loadReport(data.iframeUrl);

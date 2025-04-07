@@ -32,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         report3: 'https://reporting.pcges.us/public/dashboard/105d61ce-45f7-42ab-a3d4-ef018088c0bb',
         report4: 'https://metabase-hpr.safedigs.co.uk/public/question/dfd9c4af-5b56-4097-bc43-6f6e61cdf720',
         report5: 'https://reporting.pcges.us/public/dashboard/f79133e1-44d9-4fbc-8a1b-731b17ba79a0',
-        report6: 'https://lsbud-kibana.kb.eu-west-2.aws.cloud.es.io:9243/s/test-space/app/dashboards#/view/be22d123-754a-4703-9c3d-621e26b4ad84?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-7d%2Fd%2Cto%3Anow))&hide-filter-bar=true'
+        report6: 'https://lsbud-kibana.kb.eu-west-2.aws.cloud.es.io:9243/s/test-space/app/dashboards#/view/be22d123-754a-4703-9c3d-621e26b4ad84?_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-7d%2Fd%2Cto%3Anow))&hide-filter-bar=true',
+        report7: 'https://reporting.pcges.uk/public/question/19752a5b-cb9d-4435-a520-f44b1e1e31a7',
+        report8: 'dynamic'
     };
 
 
@@ -41,18 +43,28 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const reportId = e.target.getAttribute('data-report');
             if (reportUrls[reportId]) {
-                // Remove 'clicked' class from all links
-                navLinks.forEach(l => l.classList.remove('clicked'));
-                // Add 'clicked' class to the clicked link
-                e.target.classList.add('clicked');
-                loadReport(reportUrls[reportId]);
-                // Remove the 'clicked' class after the animation duration
-                setTimeout(() => {
-                    e.target.classList.remove('clicked');
-                }, 500);
-            } else {
-                reportContainer.innerHTML = '<h2>Report not available</h2>';
+                if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
+                    // Fetch the signed embed URL from your Lambda API
+                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com?memberid=138')
+                        .then(response => response.json())
+                        .then(data => {
+                            loadReport(data.iframeUrl);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
+                        });
+                } else {
+                    // Existing static reports
+                    navLinks.forEach(l => l.classList.remove('clicked'));
+                    e.target.classList.add('clicked');
+                    loadReport(reportUrls[reportId]);
+                    setTimeout(() => {
+                        e.target.classList.remove('clicked');
+                    }, 500);
+                }
             }
+            
         });
     });
 

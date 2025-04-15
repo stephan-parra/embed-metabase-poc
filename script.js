@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (reportUrls[reportId]) {
                 if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
                     // Fetch the signed embed URL from your Lambda API
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/embed-question?memberid=138')
+                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138')
                         .then(response => response.json())
                         .then(data => {
                             loadReport(data.iframeUrl);
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                 } else if (reportUrls[reportId] === 'dynamic' && reportId === 'report7') {
                     // Report 7: Dynamic with memberid=11062
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/embed-question?memberid=11062')
+                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062')
                         .then(response => response.json())
                         .then(data => {
                             loadReport(data.iframeUrl);

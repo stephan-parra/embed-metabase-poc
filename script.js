@@ -1,52 +1,31 @@
-const cognitoDomain = 'ap-southeast-2oe66r4s7y.auth.ap-southeast-2.amazoncognito.com'; // Adjusted domain
-const clientId = 'ieoovlck69k8r2h379lhqd5ch';
-const redirectUri = 'https://stephan-parra.github.io/embed-metabase-poc/index.html';
-
 document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('login-form');
+    const loginContainer = document.getElementById('login-container');
     const dashboardContainer = document.getElementById('dashboard-container');
     const reportContainer = document.getElementById('report-container');
     const navLinks = document.querySelectorAll('nav a');
 
-    // Check if tokens already exist
-    const idToken = sessionStorage.getItem('id_token');
-    const accessToken = sessionStorage.getItem('access_token');
+    // Hardcoded credentials
+    const validCredentials = {
+        username: 'admin',
+        password: 'password123'
+    };
 
-    if (!idToken || !accessToken) {
-        // If redirected back from Cognito with auth code
-        const urlParams = new URLSearchParams(window.location.search);
-        const authCode = urlParams.get('code');
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-        if (authCode) {
-            exchangeCodeForTokens(authCode);
+        if (username === validCredentials.username && password === validCredentials.password) {
+            loginContainer.style.display = 'none';
+            dashboardContainer.style.display = 'flex';
         } else {
-            // Redirect to Cognito Hosted UI
-            redirectToCognitoLogin();
+            alert('Invalid credentials. Please try again.');
         }
-    } else {
-        // Tokens already available
-        initializeDashboard();
-    }
-
-    // Navigation link handling
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const reportId = e.target.getAttribute('data-report');
-            if (reportUrls[reportId]) {
-                if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
-                    fetchDynamicReport('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138');
-                } else if (reportUrls[reportId] === 'dynamic' && reportId === 'report7') {
-                    fetchDynamicReport('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062');
-                } else {
-                    navLinks.forEach(l => l.classList.remove('clicked'));
-                    e.target.classList.add('clicked');
-                    loadReport(reportUrls[reportId]);
-                    setTimeout(() => e.target.classList.remove('clicked'), 500);
-                }
-            }
-        });
     });
 
+    // Object to store Metabase report URLs
     const reportUrls = {
         report1: 'https://reporting.pcges.uk/public/dashboard/035bc09d-9ff9-489d-8085-15e89abf4912',
         report2: 'https://metabase-hpr.safedigs.co.uk/public/dashboard/39496407-bb09-4df3-afa0-ab5d7fce2295',
@@ -58,78 +37,62 @@ document.addEventListener('DOMContentLoaded', () => {
         report8: 'dynamic'
     };
 
-    function initializeDashboard() {
-        dashboardContainer.style.display = 'flex';
-    }
 
-    function redirectToCognitoLogin() {
-        const loginUrl = `${cognitoDomain}/login?client_id=${clientId}&response_type=code&scope=openid+email+profile&redirect_uri=${encodeURIComponent(redirectUri)}`;
-        window.location.href = loginUrl;
-    }
-
-    function exchangeCodeForTokens(code) {
-        const tokenUrl = `${cognitoDomain}/oauth2/token`;
-
-        const body = new URLSearchParams({
-            grant_type: 'authorization_code',
-            client_id: clientId,
-            code: code,
-            redirect_uri: redirectUri
-        });
-
-        fetch(tokenUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: body
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.id_token && data.access_token) {
-                sessionStorage.setItem('id_token', data.id_token);
-                sessionStorage.setItem('access_token', data.access_token);
-                window.history.replaceState({}, document.title, redirectUri); // Clean up URL
-                initializeDashboard();
-            } else {
-                console.error('Failed to exchange code for tokens:', data);
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const reportId = e.target.getAttribute('data-report');
+            if (reportUrls[reportId]) {
+                if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
+                    // Fetch the signed embed URL from your Lambda API
+                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138')
+                        .then(response => response.json())
+                        .then(data => {
+                            loadReport(data.iframeUrl);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
+                        });
+                } else if (reportUrls[reportId] === 'dynamic' && reportId === 'report7') {
+                    // Report 7: Dynamic with memberid=11062
+                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062')
+                        .then(response => response.json())
+                        .then(data => {
+                            loadReport(data.iframeUrl);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
+                        });
+                } else {
+                    // Existing static reports
+                    navLinks.forEach(l => l.classList.remove('clicked'));
+                    e.target.classList.add('clicked');
+                    loadReport(reportUrls[reportId]);
+                    setTimeout(() => {
+                        e.target.classList.remove('clicked');
+                    }, 500);
+                }
             }
-        })
-        .catch(err => {
-            console.error('Error exchanging auth code:', err);
+            
         });
-    }
+    });
+
 
     function loadReport(url) {
+        // Clear previous content
         reportContainer.innerHTML = '';
+
+        // Create iframe
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.frameBorder = "0";
         iframe.style.width = "100%";
         iframe.style.height = "100%";
         iframe.allowTransparency = true;
+
+        // Append iframe to container
         reportContainer.appendChild(iframe);
-    }
-
-    function fetchDynamicReport(url) {
-        const token = sessionStorage.getItem('access_token');
-        if (!token) {
-            console.error('No access token available.');
-            return;
-        }
-
-        fetch(url, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            loadReport(data.iframeUrl);
-        })
-        .catch(err => {
-            console.error('Error loading dynamic report', err);
-            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
-        });
     }
 });

@@ -57,19 +57,28 @@ function initializeDashboard() {
             console.error('No access token available.');
             return;
         }
-
+    
+        console.log('Fetching dynamic report with Access Token:', accessToken);
+    
         fetch(apiUrl, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('API response status:', response.status);
+            if (!response.ok) {
+                throw new Error('HTTP status ' + response.status);
+            }
+            return response.json();
+        })
         .then(data => {
             loadReport(data.iframeUrl);
         })
         .catch(err => {
             console.error('Error loading dynamic report', err);
+            const reportContainer = document.getElementById('report-container');
             reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
         });
-    }
+    }    
 }

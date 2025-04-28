@@ -1,4 +1,7 @@
+let accessToken = '';
+
 document.addEventListener('DOMContentLoaded', () => {
+    cognitoLogin(); // 1. Login to Cognito first
     const loginForm = document.getElementById('login-form');
     const loginContainer = document.getElementById('login-container');
     const dashboardContainer = document.getElementById('dashboard-container');
@@ -45,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (reportUrls[reportId]) {
                 if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
                     // Fetch the signed embed URL from your Lambda API
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138')
+                    secureFetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138')
                         .then(response => response.json())
                         .then(data => {
                             loadReport(data.iframeUrl);
@@ -56,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                 } else if (reportUrls[reportId] === 'dynamic' && reportId === 'report7') {
                     // Report 7: Dynamic with memberid=11062
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062')
+                    secureFetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062')
                         .then(response => response.json())
                         .then(data => {
                             loadReport(data.iframeUrl);
@@ -96,3 +99,46 @@ document.addEventListener('DOMContentLoaded', () => {
         reportContainer.appendChild(iframe);
     }
 });
+// Function to login to Cognito and retrieve Access Token
+function cognitoLogin() {
+    const loginUrl = `https://cognito-idp.ap-southeast-2.amazonaws.com/`;
+
+    const loginPayload = {
+        AuthParameters: {
+            USERNAME: 'd9deb498-80b1-7057-d4e7-efdb4b161cd3',
+            PASSWORD: '3M-47tdtWjaJhXgTqKz2'
+        },
+        AuthFlow: 'USER_PASSWORD_AUTH',
+        ClientId: '7f2gqmg2eg2t9ank14gi5l1963'
+    };
+
+    fetch(loginUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-amz-json-1.1',
+            'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth'
+        },
+        body: JSON.stringify(loginPayload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.AuthenticationResult) {
+            accessToken = data.AuthenticationResult.AccessToken;
+            console.log('Cognito Access Token acquired');
+        } else {
+            console.error('Cognito login failed', data);
+        }
+    })
+    .catch(error => {
+        console.error('Error during Cognito login:', error);
+    });
+}
+
+// Update your fetch to API Gateway to use the token
+function secureFetch(url) {
+    return fetch(url, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+}

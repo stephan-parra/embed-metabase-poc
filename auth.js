@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function redirectToCognitoLogin() {
-    const loginUrl = `${cognitoDomain}/login?client_id=${clientId}&response_type=code&scope=openid+email+profile&redirect_uri=${encodeURIComponent(redirectUri)}`;
+    const loginUrl = `${cognitoDomain}/login?client_id=${clientId}&response_type=code&scope=openid+email+phone&redirect_uri=${encodeURIComponent(redirectUri)}`;
     window.location.href = loginUrl;
 }
 

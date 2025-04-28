@@ -1,5 +1,5 @@
-const cognitoDomain = 'https://ap-southeast-2_OE66r4S7Y.auth.ap-southeast-2.amazoncognito.com'; // Adjusted domain
-const clientId = '7f2gqmg2eg2t9ank14gi5l1963';
+const cognitoDomain = 'ap-southeast-2oe66r4s7y.auth.ap-southeast-2.amazoncognito.com'; // Adjusted domain
+const clientId = 'ieoovlck69k8r2h379lhqd5ch';
 const redirectUri = 'https://stephan-parra.github.io/embed-metabase-poc/index.html';
 
 document.addEventListener('DOMContentLoaded', () => {

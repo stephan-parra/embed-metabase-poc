@@ -1,29 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const loginContainer = document.getElementById('login-container');
+function initializeDashboard() {
     const dashboardContainer = document.getElementById('dashboard-container');
+    dashboardContainer.style.display = 'flex';
+
     const reportContainer = document.getElementById('report-container');
     const navLinks = document.querySelectorAll('nav a');
-
-    // Hardcoded credentials
-    const validCredentials = {
-        username: 'admin',
-        password: 'password123'
-    };
-
-    // Login form submission
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        if (username === validCredentials.username && password === validCredentials.password) {
-            loginContainer.style.display = 'none';
-            dashboardContainer.style.display = 'flex';
-        } else {
-            alert('Invalid credentials. Please try again.');
-        }
-    });
 
     // Object to store Metabase report URLs
     const reportUrls = {
@@ -37,36 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
         report8: 'dynamic'
     };
 
-
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const reportId = e.target.getAttribute('data-report');
             if (reportUrls[reportId]) {
                 if (reportUrls[reportId] === 'dynamic' && reportId === 'report8') {
-                    // Fetch the signed embed URL from your Lambda API
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138')
-                        .then(response => response.json())
-                        .then(data => {
-                            loadReport(data.iframeUrl);
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
-                        });
+                    fetchDynamicReport('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=138');
                 } else if (reportUrls[reportId] === 'dynamic' && reportId === 'report7') {
-                    // Report 7: Dynamic with memberid=11062
-                    fetch('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062')
-                        .then(response => response.json())
-                        .then(data => {
-                            loadReport(data.iframeUrl);
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
-                        });
+                    fetchDynamicReport('https://ncknx15qsh.execute-api.ap-southeast-2.amazonaws.com/uat/embed-question?memberid=11062');
                 } else {
-                    // Existing static reports
                     navLinks.forEach(l => l.classList.remove('clicked'));
                     e.target.classList.add('clicked');
                     loadReport(reportUrls[reportId]);
@@ -75,16 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 500);
                 }
             }
-            
         });
     });
 
-
     function loadReport(url) {
-        // Clear previous content
         reportContainer.innerHTML = '';
 
-        // Create iframe
         const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.frameBorder = "0";
@@ -92,7 +48,28 @@ document.addEventListener('DOMContentLoaded', () => {
         iframe.style.height = "100%";
         iframe.allowTransparency = true;
 
-        // Append iframe to container
         reportContainer.appendChild(iframe);
     }
-});
+
+    function fetchDynamicReport(apiUrl) {
+        const accessToken = sessionStorage.getItem('access_token');
+        if (!accessToken) {
+            console.error('No access token available.');
+            return;
+        }
+
+        fetch(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadReport(data.iframeUrl);
+        })
+        .catch(err => {
+            console.error('Error loading dynamic report', err);
+            reportContainer.innerHTML = '<h2>Error loading dynamic report</h2>';
+        });
+    }
+}

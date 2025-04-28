@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             redirectToCognitoLogin();
         }
     } else {
-        // Already logged in
-        dashboardContainer.style.display = 'flex';
+        // Already logged in, initialize dashboard
+        initializeDashboard();
     }
 
     if (logoutButton) {
@@ -33,11 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Redirect user to Cognito Hosted UI for login
 function redirectToCognitoLogin() {
     const loginUrl = `${cognitoDomain}/login?client_id=${clientId}&response_type=code&scope=openid+email+phone&redirect_uri=${encodeURIComponent(redirectUri)}`;
     window.location.href = loginUrl;
 }
 
+// Exchange the Authorization Code for Access and ID Tokens
 function exchangeCodeForTokens(code) {
     const tokenUrl = `${cognitoDomain}/oauth2/token`;
 
@@ -60,8 +62,8 @@ function exchangeCodeForTokens(code) {
         if (data.id_token && data.access_token) {
             sessionStorage.setItem('id_token', data.id_token);
             sessionStorage.setItem('access_token', data.access_token);
-            window.history.replaceState({}, document.title, redirectUri); // Clean up URL
-            document.getElementById('dashboard-container').style.display = 'flex';
+            window.history.replaceState({}, document.title, redirectUri); // Clean up URL (remove ?code= from URL)
+            initializeDashboard(); // Properly initialize dashboard
         } else {
             console.error('Token exchange failed:', data);
             redirectToCognitoLogin();
@@ -69,15 +71,17 @@ function exchangeCodeForTokens(code) {
     })
     .catch(err => {
         console.error('Error during token exchange:', err);
+        redirectToCognitoLogin();
     });
 }
 
+// Logout user from session
 function logout() {
-    // Clear session tokens
+    // Clear session storage
     sessionStorage.removeItem('id_token');
     sessionStorage.removeItem('access_token');
 
-    // Redirect to Cognito logout
+    // Redirect to Cognito Hosted UI logout endpoint
     const logoutUrl = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
     window.location.href = logoutUrl;
 }

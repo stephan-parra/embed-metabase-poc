@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metabase Reports Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <title>Metabase Reports Dashboard</title>
     <script src="script.js" defer></script>
 </head>
+
 <body>
+    <div id="login-container">
+        <form id="login-form">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
     <div id="dashboard-container" style="display: none; min-height: 100vh;">
         <header>
             <h1>Metabase Reports Dashboard</h1>
@@ -17,18 +27,24 @@
         <main>
             <nav>
                 <ul>
-                    <!--<li class="nav-item"><a href="#" data-report="report1"><i class="fas fa-ticket-alt"></i> Ticket Volumes (UK)</a></li>
-                    <li class="nav-item"><a href="#" data-report="report2"><i class="fas fa-chart-line"></i> Queue Monitor</a></li>
-                    <li class="nav-item"><a href="#" data-report="report3"><i class="fas fa-tachometer-alt"></i> Ticket Dashboard (US)</a></li>
-                    <li class="nav-item"><a href="#" data-report="report4"><i class="fas fa-table"></i> Tabular Data</a></li>
-                    <li class="nav-item"><a href="#" data-report="report5"><i class="fas fa-smile"></i> Monitor Dashboard with Date</a></li>
-                    <li class="nav-item"><a href="#" data-report="report6"><i class="fas fa-chart-bar"></i> Performance Metrics</a></li>-->
-                    <li class="nav-item"><a href="#" data-report="report7"><i class="fas fa-ticket-alt"></i> Transmissions (hidden member id 11062)</a></li>
-                    <li class="nav-item"><a href="#" data-report="report8"><i class="fas fa-ticket-alt"></i> Transmissions (hidden member id 138)</a></li>
+                    <li class="nav-item"><a href="#" data-report="report1"><i class="fas fa-ticket-alt"></i> Ticket
+                            Volumes (UK)</a></li>
+                    <li class="nav-item"><a href="#" data-report="report2"><i class="fas fa-chart-line"></i> Queue
+                            Monitor</a></li>
+                    <li class="nav-item"><a href="#" data-report="report3"><i class="fas fa-tachometer-alt"></i> Ticket
+                            Dashboard (US)</a></li>
+                    <li class="nav-item"><a href="#" data-report="report4"><i class="fas fa-table"></i> Tabular Data</a>
+                    </li>
+                    <li class="nav-item"><a href="#" data-report="report5"><i class="fas fa-smile"></i> Monitor
+                            Dashboard with Date</a></li>
+                    <li class="nav-item"><a href="#" data-report="report6"><i class="fas fa-chart-bar"></i> Performance
+                            Metrics</a></li>
+                    <li class="nav-item"><a href="#" data-report="report7"><i class="fas fa-ticket-alt"></i> Transmissions (using hidden member id 11062)</a></li>
+                    <li class="nav-item"><a href="#" data-report="report8"><i class="fas fa-ticket-alt"></i> Transmissions (using hidden member id 138)</a></li>
                 </ul>
             </nav>
             <div id="report-container">
-                <!-- Reports will load here -->
+                <!-- The report will be loaded here -->
             </div>
         </main>
         <footer>
